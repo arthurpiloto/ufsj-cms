@@ -1,7 +1,6 @@
-"use client";
 import { useState } from "react";
-import { useRouter } from "next/navigation";
-import { login } from "@/lib/api";
+import { useNavigate } from "react-router-dom";
+import { login } from "../lib/api";
 import axios from "axios";
 
 export default function LoginPage() {
@@ -9,7 +8,7 @@ export default function LoginPage() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const router = useRouter();
+  const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -18,26 +17,20 @@ export default function LoginPage() {
     try {
       const data = await login(email, password);
       localStorage.setItem("jwt_token", data.access_token);
-      router.push("/dashboard");
-    } catch (err: unknown) {
+      navigate("/dashboard");
+    } catch (err) {
       if (axios.isAxiosError(err) && err.response) {
-        setError(
-          err.response.data.message ||
-            "Falha no login. Verifique as suas credenciais."
-        );
-      } else if (err instanceof Error) {
-        setError(err.message);
+        setError(err.response.data.message || "Falha no login.");
       } else {
         setError("Ocorreu um erro inesperado.");
       }
-      console.error(err);
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen">
+    <div className="flex items-center justify-center min-h-screen bg-gray-100">
       <div className="p-8 bg-white rounded-lg shadow-xl w-full max-w-sm">
         <h1 className="text-2xl font-bold mb-6 text-center text-gray-800">
           Login do CMS

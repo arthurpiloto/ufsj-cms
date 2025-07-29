@@ -1,18 +1,16 @@
 import axios from "axios";
-import type { Page } from "@/types";
+import type { Page } from "../types";
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001/api";
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3001/api";
 
 const api = axios.create({
   baseURL: API_URL,
 });
 
 api.interceptors.request.use((config) => {
-  if (typeof window !== "undefined") {
-    const token = localStorage.getItem("jwt_token");
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
-    }
+  const token = localStorage.getItem("jwt_token");
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
   }
   return config;
 });
