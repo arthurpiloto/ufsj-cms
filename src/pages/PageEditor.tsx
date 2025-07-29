@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback } from "react";
 import { useParams, Link } from "react-router-dom";
 import { getPageById, updatePage } from "../lib/api";
 import { produce } from "immer";
-import { Save, ArrowLeft } from "lucide-react";
+import { Plus, Trash, Save, ArrowLeft } from "lucide-react";
 import type { Page, Section, PageDocument, Annex } from "../types";
 
 export default function PageEditor() {
@@ -131,7 +131,241 @@ export default function PageEditor() {
         </div>
         <h1 className="text-3xl font-bold mt-4">A editar: {page.title}</h1>
       </header>
-      <main className="container mx-auto bg-white p-6 rounded-lg shadow-xl"></main>
+      <main className="container mx-auto bg-white p-6 rounded-lg shadow-xl">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Título da Página
+            </label>
+            <input
+              type="text"
+              value={page.title}
+              onChange={(e) => handleFieldChange(["title"], e.target.value)}
+              className="w-full p-2 border rounded-md"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Slug da Página (URL)
+            </label>
+            <input
+              type="text"
+              value={page.slug}
+              onChange={(e) => handleFieldChange(["slug"], e.target.value)}
+              className="w-full p-2 border rounded-md bg-gray-100"
+            />
+          </div>
+        </div>
+
+        <hr className="my-8" />
+
+        <div>
+          <h2 className="text-2xl font-semibold mb-4">Seções</h2>
+          <div className="space-y-6">
+            {page.sections?.map((section, sectionIndex) => (
+              <div
+                key={section._id || sectionIndex}
+                className="bg-gray-50 p-4 rounded-lg border"
+              >
+                <div className="flex justify-between items-center mb-4">
+                  <input
+                    type="text"
+                    value={section.title}
+                    onChange={(e) =>
+                      handleFieldChange(
+                        ["sections", sectionIndex, "title"],
+                        e.target.value
+                      )
+                    }
+                    className="text-xl font-bold p-1 w-full"
+                  />
+                  <button
+                    onClick={() => handleRemove(["sections", sectionIndex])}
+                    className="text-red-500 hover:text-red-700 ml-4"
+                  >
+                    <Trash size={18} />
+                  </button>
+                </div>
+
+                <div className="space-y-4 pl-4">
+                  {section.documents?.map((doc, docIndex) => (
+                    <div
+                      key={doc._id || docIndex}
+                      className="bg-white p-3 rounded border shadow-sm"
+                    >
+                      <div className="flex justify-between items-center mb-2">
+                        <input
+                          type="text"
+                          value={doc.title}
+                          onChange={(e) =>
+                            handleFieldChange(
+                              [
+                                "sections",
+                                sectionIndex,
+                                "documents",
+                                docIndex,
+                                "title",
+                              ],
+                              e.target.value
+                            )
+                          }
+                          className="font-semibold p-1 w-full"
+                        />
+                        <button
+                          onClick={() =>
+                            handleRemove([
+                              "sections",
+                              sectionIndex,
+                              "documents",
+                              docIndex,
+                            ])
+                          }
+                          className="text-red-500 hover:text-red-700 ml-2"
+                        >
+                          <Trash size={16} />
+                        </button>
+                      </div>
+                      <input
+                        type="text"
+                        placeholder="URL do documento"
+                        value={doc.url || ""}
+                        onChange={(e) =>
+                          handleFieldChange(
+                            [
+                              "sections",
+                              sectionIndex,
+                              "documents",
+                              docIndex,
+                              "url",
+                            ],
+                            e.target.value
+                          )
+                        }
+                        className="text-sm p-1 w-full border rounded mb-2"
+                      />
+                      <textarea
+                        placeholder="Descrição"
+                        value={doc.description || ""}
+                        onChange={(e) =>
+                          handleFieldChange(
+                            [
+                              "sections",
+                              sectionIndex,
+                              "documents",
+                              docIndex,
+                              "description",
+                            ],
+                            e.target.value
+                          )
+                        }
+                        className="text-sm p-1 w-full border rounded h-16"
+                      />
+
+                      <div className="mt-3 pl-4">
+                        <h4 className="text-sm font-semibold mb-2">Anexos</h4>
+                        {doc.annexes?.map((annex, annexIndex) => (
+                          <div
+                            key={annex._id || annexIndex}
+                            className="flex items-center gap-2 mb-2"
+                          >
+                            <input
+                              type="text"
+                              placeholder="Título do anexo"
+                              value={annex.title}
+                              onChange={(e) =>
+                                handleFieldChange(
+                                  [
+                                    "sections",
+                                    sectionIndex,
+                                    "documents",
+                                    docIndex,
+                                    "annexes",
+                                    annexIndex,
+                                    "title",
+                                  ],
+                                  e.target.value
+                                )
+                              }
+                              className="text-sm p-1 flex-grow border rounded"
+                            />
+                            <input
+                              type="text"
+                              placeholder="URL do anexo"
+                              value={annex.url}
+                              onChange={(e) =>
+                                handleFieldChange(
+                                  [
+                                    "sections",
+                                    sectionIndex,
+                                    "documents",
+                                    docIndex,
+                                    "annexes",
+                                    annexIndex,
+                                    "url",
+                                  ],
+                                  e.target.value
+                                )
+                              }
+                              className="text-sm p-1 flex-grow border rounded"
+                            />
+                            <button
+                              onClick={() =>
+                                handleRemove([
+                                  "sections",
+                                  sectionIndex,
+                                  "documents",
+                                  docIndex,
+                                  "annexes",
+                                  annexIndex,
+                                ])
+                              }
+                              className="text-red-500 hover:text-red-700"
+                            >
+                              <Trash size={14} />
+                            </button>
+                          </div>
+                        ))}
+                        <button
+                          onClick={() =>
+                            handleAddNew("annex", [
+                              "sections",
+                              sectionIndex,
+                              "documents",
+                              docIndex,
+                              "annexes",
+                            ])
+                          }
+                          className="text-xs flex items-center gap-1 text-blue-600 hover:underline mt-2"
+                        >
+                          <Plus size={14} /> Adicionar Anexo
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+                  <button
+                    onClick={() =>
+                      handleAddNew("document", [
+                        "sections",
+                        sectionIndex,
+                        "documents",
+                      ])
+                    }
+                    className="text-sm flex items-center gap-1 text-green-600 hover:underline mt-4"
+                  >
+                    <Plus size={16} /> Adicionar Documento
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+          <button
+            onClick={() => handleAddNew("section", ["sections"])}
+            className="mt-6 flex items-center gap-2 bg-gray-200 text-gray-800 px-4 py-2 rounded hover:bg-gray-300"
+          >
+            <Plus size={18} /> Adicionar Seção
+          </button>
+        </div>
+      </main>
     </div>
   );
 }
