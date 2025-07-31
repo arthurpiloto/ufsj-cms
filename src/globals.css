@@ -2,24 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
-.main-content,
-.select-container {
+.main-content {
   gap: 2rem;
 }
 
 .logos-container,
-.filter-container,
-.cards-container {
+.button-dash {
   gap: 1rem;
-}
-
-.logos-container a {
-  width: fit-content;
-  height: fit-content;
-}
-
-.menu-links a {
-  display: flex;
-  align-items: center;
-  width: fit-content;
 }

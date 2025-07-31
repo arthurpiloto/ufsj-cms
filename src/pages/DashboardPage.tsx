@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { getAllPagesForCms, deletePage, createPage } from "../lib/api";
 import { PlusCircle, Edit, Trash2, LogOut } from "lucide-react";
 import type { Page } from "../types";
+import CmsHeader from "../components/CmsHeader";
 
 export default function DashboardPage() {
   const [pages, setPages] = useState<Page[]>([]);
@@ -68,52 +69,50 @@ export default function DashboardPage() {
   if (loading) return <p className="text-center p-10">A carregar páginas...</p>;
 
   return (
-    <div className="container mx-auto p-4 sm:p-8">
-      <header className="flex justify-between items-center mb-8">
-        <h1 className="text-2xl sm:text-3xl font-bold text-gray-800">
-          Dashboard do CMS
-        </h1>
-        <button
-          onClick={handleLogout}
-          className="flex items-center gap-2 bg-gray-600 text-white px-4 py-2 rounded-lg hover:bg-gray-700"
-        >
-          <LogOut size={18} />
-          Sair
-        </button>
-      </header>
-      <div className="bg-white p-6 rounded-lg shadow-xl">
-        <div className="flex justify-between items-center mb-6">
-          <h2 className="text-xl font-semibold text-gray-700">Páginas</h2>
+    <div className="flex flex-col min-h-screen">
+      <CmsHeader
+        title="Pró-Reitoria de Ensino de Graduação"
+        subtitle="Universidade Federal de São João del-Rei"
+      />
+      <main className="main-content flex-fill flex-col flex align-items-center p-4">
+        <div className="w-full flex justify-content-evenly align-items-center">
+          <button
+            onClick={handleLogout}
+            className="button-dash flex items-center px-4 py-2"
+          >
+            <LogOut size={18} />
+            Sair
+          </button>
           <button
             onClick={handleCreatePage}
-            className="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
+            className="button-dash flex items-center px-4 py-2"
           >
             <PlusCircle size={20} />
             Criar Página
           </button>
         </div>
-        <div className="space-y-3">
+        <div className="w-full">
           {pages.map((page) => (
             <div
               key={page._id}
-              className="flex items-center justify-between p-4 bg-gray-50 rounded-md border"
+              className="w-full flex align-items-center justify-content-between p-4 rounder-sm border"
             >
               <div>
-                <p className="font-semibold text-gray-800">{page.title}</p>
-                <p className="text-sm text-gray-500">/{page.slug}</p>
+                <p>{page.title}</p>
+                <p>URL: /{page.slug}</p>
               </div>
-              <div className="flex items-center gap-4">
+              <div className="flex align-items-center justify-content-center">
                 <Link
                   to={`/dashboard/edit/${page._id}`}
+                  className="flex text-pure-100"
                   title="Editar"
-                  className="text-blue-600 hover:text-blue-800"
                 >
                   <Edit size={20} />
                 </Link>
                 <button
                   onClick={() => handleDelete(page._id, page.title)}
                   title="Excluir"
-                  className="text-red-600 hover:text-red-800"
+                  className="flex border-none bg-pure-0"
                 >
                   <Trash2 size={20} />
                 </button>
@@ -121,7 +120,7 @@ export default function DashboardPage() {
             </div>
           ))}
         </div>
-      </div>
+      </main>
     </div>
   );
 }
