@@ -78,20 +78,20 @@ export default function DashboardPage() {
         <div className="w-full flex justify-content-evenly align-items-center">
           <button
             onClick={handleLogout}
-            className="button-dash flex items-center px-4 py-2"
+            className="gap flex items-center px-4 py-2"
           >
             <LogOut size={18} />
             Sair
           </button>
           <button
             onClick={handleCreatePage}
-            className="button-dash flex items-center px-4 py-2"
+            className="gap flex items-center px-4 py-2"
           >
             <PlusCircle size={20} />
             Criar Página
           </button>
         </div>
-        <div className="w-full">
+        <div className="w-full flex flex-col gap">
           {pages.map((page) => (
             <div
               key={page._id}
