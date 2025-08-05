@@ -69,42 +69,42 @@ export default function DashboardPage() {
   if (loading) return <p className="text-center p-10">A carregar páginas...</p>;
 
   return (
-    <div className="flex flex-col min-h-screen">
+    <div>
       <CmsHeader
         title="Pró-Reitoria de Ensino de Graduação"
         subtitle="Universidade Federal de São João del-Rei"
       />
-      <main className="main-content flex-fill flex-col flex align-items-center p-4">
-        <div className="w-full flex justify-content-evenly align-items-center">
+      <main className="main-content flex-column d-flex align-items-center p-4">
+        <div className="full-grow d-flex align-items-center justify-content-center gap">
           <button
             onClick={handleLogout}
-            className="gap flex items-center px-4 py-2"
+            className="d-flex align-items-center gap px-4 py-2"
           >
             <LogOut size={18} />
             Sair
           </button>
           <button
             onClick={handleCreatePage}
-            className="gap flex items-center px-4 py-2"
+            className="d-flex align-items-center gap px-4 py-2"
           >
             <PlusCircle size={20} />
             Criar Página
           </button>
         </div>
-        <div className="w-full flex flex-col gap">
+        <div className="full-grow d-flex align-items-center justify-content-center flex-column gap">
           {pages.map((page) => (
             <div
               key={page._id}
-              className="w-full flex align-items-center justify-content-between p-4 rounder-sm border"
+              className="full-grow d-flex align-items-center justify-content-between p-4 rounder-sm border-solid-sm"
             >
               <div>
                 <p>{page.title}</p>
                 <p>URL: /{page.slug}</p>
               </div>
-              <div className="flex align-items-center justify-content-center">
+              <div className="gap d-flex align-items-center justify-content-center">
                 <Link
                   to={`/dashboard/edit/${page._id}`}
-                  className="flex text-pure-100"
+                  className="d-flex text-pure-100"
                   title="Editar"
                 >
                   <Edit size={20} />
@@ -112,7 +112,7 @@ export default function DashboardPage() {
                 <button
                   onClick={() => handleDelete(page._id, page.title)}
                   title="Excluir"
-                  className="flex border-none bg-pure-0"
+                  className="d-flex bg-pure-0 border-solid-none"
                 >
                   <Trash2 size={20} />
                 </button>

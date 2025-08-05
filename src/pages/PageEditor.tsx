@@ -4,6 +4,7 @@ import { getPageById, updatePage } from "../lib/api";
 import { produce } from "immer";
 import { Plus, Trash, Save, ArrowLeft } from "lucide-react";
 import type { Page, Section, PageDocument, Annex } from "../types";
+import CmsHeader from "../components/CmsHeader";
 
 export default function PageEditor() {
   const { pageId } = useParams<{ pageId: string }>();
@@ -110,12 +111,16 @@ export default function PageEditor() {
     );
 
   return (
-    <div className="min-h-screen p-4 sm:p-8">
-      <header className="container mx-auto mb-8">
-        <div className="flex justify-between items-center">
+    <div>
+      <CmsHeader
+        title="Pró-Reitoria de Ensino de Graduação"
+        subtitle="Universidade Federal de São João del-Rei"
+      />
+      <main className="main-content d-flex full-grow flex-column align-items-center p-4">
+        <div className="gap d-flex full-grow justify-content-center align-items-center">
           <Link
             to="/dashboard"
-            className="text-blue-600 hover:underline flex items-center gap-1"
+            className="text-pure-100 d-flex align-items-center justify-content-center gap px-6 py-2 bg-gray-10"
           >
             <ArrowLeft size={16} />
             Voltar
@@ -123,14 +128,13 @@ export default function PageEditor() {
           <button
             onClick={handleSave}
             disabled={saving}
-            className="flex items-center gap-2 bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700"
+            className="d-flex align-items-center justify-content-center gap px-6 py-2"
           >
             <Save size={18} />
             {saving ? "A salvar..." : "Salvar"}
           </button>
         </div>
-        <h1 className="text-3xl font-bold mt-4">A editar: {page.title}</h1>
-      </header>
+      </main>
       <main className="container mx-auto bg-white p-6 rounded-lg shadow-xl">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
           <div>

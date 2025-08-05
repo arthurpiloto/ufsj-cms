@@ -10,3 +10,7 @@
 .gap {
   gap: 1rem;
 }
+
+.full-grow {
+  width: 100%;
+}

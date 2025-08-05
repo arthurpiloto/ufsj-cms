@@ -31,28 +31,28 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="flex flex-col min-h-screen">
+    <div>
       <CmsHeader
         title="Pró-Reitoria de Ensino de Graduação"
         subtitle="Universidade Federal de São João del-Rei"
       />
-      <main className="flex-fill flex align-items-center justify-content-center p-4">
-        <div className="flex flex-col align-items-center justify-content-center px-10x py-8x rounder-md shadow-sm">
+      <main className="d-flex align-items-center justify-content-center p-4">
+        <div className="px-10x py-8x rounder-md shadow-sm">
           <h1 className="mb-6">Acesso ao CMS</h1>
           <form onSubmit={handleSubmit}>
-            <div className="mb-4">
+            <div className="d-flex flex-column mb-4">
               <label htmlFor="email">Email</label>
               <input
                 type="email"
                 id="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full px-3 py-2"
+                className="px-3 py-2"
                 required
               />
             </div>
-            <div className="mb-6">
-              <label className="block mb-2" htmlFor="password">
+            <div className="d-flex flex-column mb-4">
+              <label className="mb-2" htmlFor="password">
                 Senha
               </label>
               <input
@@ -60,12 +60,12 @@ export default function LoginPage() {
                 id="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full px-3 py-2"
+                className="px-3 py-2"
                 required
               />
             </div>
             {error && <p className="mb-4">{error}</p>}
-            <button type="submit" disabled={loading} className="w-full py-2">
+            <button type="submit" disabled={loading} className="py-2">
               {loading ? "A entrar..." : "Entrar"}
             </button>
           </form>
