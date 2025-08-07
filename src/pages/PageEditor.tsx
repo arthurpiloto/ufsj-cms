@@ -147,27 +147,135 @@ export default function PageEditor() {
           {page.sections?.map((section, sectionIndex) => (
             <div
               key={section._id || sectionIndex}
-              className="d-flex flex-column full-grow"
+              className="d-flex gap flex-column full-grow"
             >
-              <div className="gap d-flex align-items-center justify-content-start mid-grow">
-                <input
-                  type="text"
-                  value={section.title}
-                  className="p-1 m-0 full-grow"
-                  onChange={(e) =>
-                    handleFieldChange(
-                      ["sections", sectionIndex, "title"],
-                      e.target.value
-                    )
-                  }
-                />
-                <button
-                  className="px-2 py-1 d-flex align-items-center justify-content-center"
-                  onClick={() => handleRemove(["sections", sectionIndex])}
-                >
-                  <Trash size={18} />
-                </button>
+              <div className="d-flex flex-column align-items-start">
+                <span>Título da Seção:</span>
+                <div className="gap d-flex align-items-start mid-grow">
+                  <input
+                    type="text"
+                    value={section.title}
+                    className="p-1 m-0 full-grow"
+                    onChange={(e) =>
+                      handleFieldChange(
+                        ["sections", sectionIndex, "title"],
+                        e.target.value
+                      )
+                    }
+                  />
+                  <button
+                    className="px-2 py-1 d-flex align-items-center justify-content-center"
+                    onClick={() => handleRemove(["sections", sectionIndex])}
+                  >
+                    <Trash size={18} />
+                  </button>
+                </div>
               </div>
+
+              {section.documents?.map((doc, docIndex) => (
+                <div
+                  key={doc._id || docIndex}
+                  className="gap d-flex flex-column"
+                >
+                  <div className="d-flex flex-column align-items-start">
+                    <span>Título do Edital:</span>
+                    <div className="d-flex gap align-items-start full-grow">
+                      <input
+                        type="text"
+                        value={doc.title}
+                        className="m-0 p-1 mid-grow"
+                        onChange={(e) =>
+                          handleFieldChange(
+                            [
+                              "sections",
+                              sectionIndex,
+                              "documents",
+                              docIndex,
+                              "title",
+                            ],
+                            e.target.value
+                          )
+                        }
+                      />
+                      <button
+                        className="px-2 py-1 d-flex align-items-center justify-content-center"
+                        onClick={() =>
+                          handleRemove([
+                            "sections",
+                            sectionIndex,
+                            "documents",
+                            docIndex,
+                          ])
+                        }
+                      >
+                        <Trash size={18} />
+                      </button>
+                    </div>
+                  </div>
+
+                  <div className="d-flex align-items-start flex-column">
+                    <span className="">URL do Documento:</span>
+                    <div className="d-flex gap align-items-start full-grow">
+                      <input
+                        type="text"
+                        className="m-0 p-1 full-grow"
+                        value={doc.url || ""}
+                        placeholder="URL do Documento"
+                        onChange={(e) =>
+                          handleFieldChange(
+                            [
+                              "sections",
+                              sectionIndex,
+                              "documents",
+                              docIndex,
+                              "url",
+                            ],
+                            e.target.value
+                          )
+                        }
+                      />
+                      <button
+                        className="px-2 py-1 d-flex align-items-start"
+                        onClick={() =>
+                          handleFieldChange(
+                            [
+                              "sections",
+                              sectionIndex,
+                              "documents",
+                              docIndex,
+                              "url",
+                            ],
+                            ""
+                          )
+                        }
+                      >
+                        <Trash size={18} />
+                      </button>
+                    </div>
+                  </div>
+
+                  <div className="d-flex flex-column align-items-start">
+                    <span>Descrição do Edital:</span>
+                    <textarea
+                      placeholder="Descrição do Edital"
+                      value={doc.description || ""}
+                      className="full-grow"
+                      onChange={(e) =>
+                        handleFieldChange(
+                          [
+                            "sections",
+                            sectionIndex,
+                            "documents",
+                            docIndex,
+                            "description",
+                          ],
+                          e.target.value
+                        )
+                      }
+                    />
+                  </div>
+                </div>
+              ))}
             </div>
           ))}
         </div>

@@ -1,6 +1,6 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+textarea {
+  resize: none;
+}
 
 .main-content {
   gap: 2rem;
